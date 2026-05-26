@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 · Subtraction</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--choc:#4A2000;--mocha:#7A3E00;--caramel:#C27600;--cream:#FFF8F0;--biscuit:#FFE4B5;--icing:#FF8FAB;--sage:#7FB069;}
+html,body{width:100%;min-height:100vh}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#FFF0D0 0%,#FFE4B5 100%);min-height:100vh;padding:0 0 32px;display:flex;flex-direction:column;align-items:center;}
+.banner{width:100%;background:linear-gradient(135deg,var(--mocha),var(--choc));padding:14px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.banner-title{font-family:'Fredoka One',cursive;font-size:26px;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.banner-chip{background:var(--icing);color:#5A1A2A;font-size:12px;font-weight:900;padding:5px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.3)}
+.shelf{width:100%;height:18px;background:var(--mocha);box-shadow:0 4px 8px rgba(0,0,0,.15);margin-bottom:20px}
+.page{width:100%;max-width:680px;padding:0 16px;display:flex;flex-direction:column;gap:20px}
+.bcard{background:var(--cream);border-radius:24px;padding:20px;box-shadow:0 6px 0 rgba(74,32,0,.15),0 2px 16px rgba(0,0,0,.08);border:3px solid rgba(255,255,255,.8);position:relative;overflow:hidden}
+.bcard::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;border-radius:24px 24px 0 0}
+.bcard.choc::before{background:var(--choc)}.bcard.caramel::before{background:var(--caramel)}.bcard.sage::before{background:var(--sage)}
+.bc-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--choc);margin-bottom:4px}
+.hint{font-size:13px;font-weight:700;color:var(--mocha);margin-bottom:14px;line-height:1.5}
+
+/* Target banner */
+.target-banner{background:var(--biscuit);border-radius:16px;padding:12px 16px;border:2.5px dashed var(--caramel);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.target-lbl{font-family:'Fredoka One',cursive;font-size:15px;color:var(--choc)}
+.target-num{font-family:'Fredoka One',cursive;font-size:40px;color:var(--icing);text-shadow:0 2px 0 rgba(0,0,0,.1)}
+.prog-wrap{flex:1;min-width:120px}
+.prog-bar{height:12px;background:#FFD5B0;border-radius:10px;overflow:hidden;margin-top:6px;border:2px solid var(--caramel)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--icing),#FF4D79);border-radius:10px;transition:width .35s}
+.prog-text{font-size:12px;font-weight:800;color:var(--mocha);margin-top:3px}
+
+/* Plate */
+.plate{
+  width:100%;max-width:480px;min-height:150px;
+  background:radial-gradient(ellipse at 50% 55%,#FFFDF8 50%,var(--biscuit) 100%);
+  border-radius:50%;border:5px solid #F5C89A;
+  margin:0 auto 16px;padding:20px 40px;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 16px rgba(0,0,0,.12);
+}
+.cookie{font-size:40px;cursor:pointer;user-select:none;transition:all .28s;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+.cookie:hover{transform:scale(1.25) rotate(8deg)}
+.cookie:active{transform:scale(.9)}
+.cookie.munched{opacity:0;transform:scale(0) rotate(30deg);pointer-events:none}
+
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.stat-box{background:var(--biscuit);border-radius:14px;padding:10px 16px;text-align:center;border:2.5px solid var(--caramel);min-width:82px;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.stat-box.good{background:#D4F5D4;border-color:var(--sage)}
+.stat-num{font-family:'Fredoka One',cursive;font-size:44px;line-height:1;color:var(--choc)}
+.stat-num.good{color:var(--sage)}
+.stat-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mocha);margin-top:2px}
+.stat-lbl.good{color:var(--sage)}
+.eq-live{text-align:center;font-family:'Fredoka One',cursive;font-size:28px;color:var(--choc);min-height:36px;margin-bottom:8px}
+.eq-live .ans{color:var(--sage)}
+.bravo{text-align:center;font-family:'Fredoka One',cursive;font-size:20px;color:var(--sage);min-height:28px;margin-bottom:8px}
+.new-plate-btn{display:block;margin:0 auto;background:linear-gradient(135deg,var(--caramel),var(--mocha));color:#fff;border:none;border-radius:16px;padding:12px 28px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:all .2s}
+.new-plate-btn:hover{transform:scale(1.06)}
+
+/* Type quiz */
+.cookies-shown{font-size:32px;letter-spacing:2px;margin:8px 0;min-height:40px;line-height:1.4}
+.cross-out{opacity:.2;filter:grayscale(1)}
+.type-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0}
+.type-inp{font-family:'Fredoka One',cursive;font-size:30px;width:84px;height:58px;border-radius:14px;border:3px solid var(--caramel);text-align:center;color:var(--choc);outline:none;transition:border-color .15s;background:var(--biscuit);-moz-appearance:textfield}
+.type-inp::-webkit-outer-spin-button,.type-inp::-webkit-inner-spin-button{-webkit-appearance:none}
+.type-inp:focus{border-color:var(--mocha)}
+.check-btn{background:linear-gradient(135deg,var(--caramel),var(--mocha));color:#fff;border:none;border-radius:14px;padding:14px 22px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:all .18s}
+.check-btn:hover{transform:scale(1.06)}
+.type-fb{font-family:'Fredoka One',cursive;font-size:17px;min-height:22px;margin-top:8px;text-align:center}
+
+/* MC Quiz */
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{font-family:'Fredoka One',cursive;font-size:24px;min-width:68px;height:54px;border-radius:14px;border:3px solid var(--caramel);background:var(--biscuit);cursor:pointer;color:var(--choc);transition:all .14s;padding:0 12px;box-shadow:0 3px 0 rgba(0,0,0,.1)}
+.opt:hover{border-color:var(--mocha);transform:scale(1.06);background:var(--cream)}
+.opt.correct{background:#D4F5D4;border-color:var(--sage);color:#1A5C25}
+.opt.wrong{background:#FFE0E0;border-color:#FF6B6B;color:#C92A2A}
+.quiz-fb{font-family:'Fredoka One',cursive;font-size:17px;min-height:22px;margin-top:10px;text-align:center}
+.next-btn{margin-top:12px;background:linear-gradient(135deg,var(--caramel),var(--mocha));color:#fff;border:none;border-radius:16px;padding:12px 28px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:all .18s}
+.next-btn:hover{transform:scale(1.06)}
+</style>
+</head>
+<body>
+<div class="banner"><div class="banner-title">🍪 Subtraction</div><div class="banner-chip">Chapter 3</div></div>
+<div class="shelf"></div>
+<div class="page">
+
+  <div class="bcard choc">
+    <div class="bc-title">🍽️ Eat the cookies — stop at the right number!</div>
+    <div class="hint">The sign tells you how many to eat. Tap each cookie to munch it! Stop at exactly the right number — not too many!</div>
+    <div class="target-banner">
+      <span class="target-lbl">Eat exactly</span>
+      <span class="target-num" id="targetNum">5</span>
+      <span class="target-lbl">cookies</span>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+        <div class="prog-text" id="progText">0 / 5 eaten</div>
+      </div>
+    </div>
+    <div class="plate" id="plate"></div>
+    <div class="stats">
+      <div class="stat-box"><div class="stat-num" id="startedWith">10</div><div class="stat-lbl">Started with</div></div>
+      <div style="font-family:'Fredoka One',cursive;font-size:38px;color:var(--icing);align-self:center">−</div>
+      <div class="stat-box"><div class="stat-num" id="eatenSoFar">0</div><div class="stat-lbl">Eaten</div></div>
+      <div style="font-family:'Fredoka One',cursive;font-size:38px;color:#CCC;align-self:center">=</div>
+      <div class="stat-box good"><div class="stat-num good" id="remaining">10</div><div class="stat-lbl good">Remaining</div></div>
+    </div>
+    <div class="eq-live" id="eqLive"></div>
+    <div class="bravo" id="bravo"></div>
+    <button class="new-plate-btn" onclick="newPlate()">New plate 🍽️</button>
+  </div>
+
+  <div class="bcard caramel">
+    <div class="bc-title">✏️ Work it out yourself!</div>
+    <div class="hint">Look at the cookies. Faded ones were eaten. Count the bright ones and type your answer!</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--choc);margin-bottom:6px" id="typeQ">Loading…</div>
+    <div class="cookies-shown" id="cookiesShown"></div>
+    <div style="font-family:'Fredoka One',cursive;font-size:19px;color:var(--mocha);margin-bottom:10px" id="typeEqLine"></div>
+    <div class="type-row">
+      <input type="number" class="type-inp" id="typeInput" min="0" max="15" placeholder="?">
+      <button class="check-btn" onclick="checkType()">Check ✓</button>
+    </div>
+    <div class="type-fb" id="typeFb"></div>
+    <button class="next-btn" onclick="newTypeQ()">Next question ➡️</button>
+  </div>
+
+  <div class="bcard sage">
+    <div class="bc-title">🔢 Subtraction picture quiz!</div>
+    <div class="hint">Faded cookies were eaten. How many bright ones are left? Pick your answer!</div>
+    <div class="cookies-shown" id="mcCookies"></div>
+    <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--choc);margin-bottom:8px" id="mcEq"></div>
+    <div class="opts" id="mcOpts"></div>
+    <div class="quiz-fb" id="mcFb"></div>
+    <button class="next-btn" onclick="newMCQ()">Next question ➡️</button>
+  </div>
+
+</div>
+<script>
+let plateTotal=0,eaten=0,eatTarget=0,plateActive=true;
+function newPlate(){
+  plateTotal=Math.floor(Math.random()*5)+6;eatTarget=Math.floor(Math.random()*(plateTotal-2))+1;eaten=0;plateActive=true;
+  document.getElementById('targetNum').textContent=eatTarget;
+  document.getElementById('progFill').style.width='0%';document.getElementById('progText').textContent='0 / '+eatTarget+' eaten';
+  document.getElementById('startedWith').textContent=plateTotal;document.getElementById('eatenSoFar').textContent=0;
+  document.getElementById('remaining').textContent=plateTotal;document.getElementById('eqLive').textContent='';document.getElementById('bravo').textContent='';
+  const plate=document.getElementById('plate');plate.innerHTML='';
+  const cookies=['🍪','🧁','🍩'];const ck=cookies[Math.floor(Math.random()*cookies.length)];
+  for(let i=0;i<plateTotal;i++){const c=document.createElement('span');c.className='cookie';c.textContent=ck;c.onclick=eatCookie;plate.appendChild(c);}
+}
+function eatCookie(e){
+  if(!plateActive)return;const c=e.target;if(c.classList.contains('munched'))return;
+  c.classList.add('munched');eaten++;const left=plateTotal-eaten;
+  document.getElementById('eatenSoFar').textContent=eaten;document.getElementById('remaining').textContent=left;
+  document.getElementById('eqLive').innerHTML=plateTotal+' − '+eaten+' = <span class="ans">'+left+'</span>';
+  document.getElementById('progFill').style.width=Math.min(eaten/eatTarget*100,100)+'%';
+  document.getElementById('progText').textContent=eaten+' / '+eatTarget+' eaten';
+  if(eaten===eatTarget){document.getElementById('bravo').textContent='🎉 Perfect! You ate exactly '+eatTarget+' and left '+left+'!';plateActive=false;document.querySelectorAll('.cookie:not(.munched)').forEach(x=>x.style.pointerEvents='none');}
+  else if(eaten>eatTarget){document.getElementById('bravo').textContent='Oops! Too many! Try a new plate.';document.getElementById('bravo').style.color='var(--icing)';plateActive=false;document.querySelectorAll('.cookie').forEach(x=>x.style.pointerEvents='none');}
+}
+newPlate();
+let tA=0,tB=0;
+function newTypeQ(){tA=Math.floor(Math.random()*5)+5;tB=Math.floor(Math.random()*(tA-1))+1;document.getElementById('typeQ').textContent='There are '+tA+' cookies. Someone eats '+tB+'. How many are left?';let show='';const left=tA-tB;for(let i=0;i<tA;i++)show+=i<left?'🍪':'<span class="cross-out">🍪</span>';document.getElementById('cookiesShown').innerHTML=show;document.getElementById('typeEqLine').textContent=tA+' − '+tB+' = ?';document.getElementById('typeInput').value='';document.getElementById('typeFb').textContent='';}
+function checkType(){const val=parseInt(document.getElementById('typeInput').value);const ans=tA-tB;const fb=document.getElementById('typeFb');if(val===ans){fb.textContent='🎉 Yes! '+tA+' − '+tB+' = '+ans+'! Great job! ⭐';fb.style.color='var(--sage)';}else{fb.textContent='Count the bright 🍪 cookies — those are the ones left!';fb.style.color='var(--icing)';}}
+newTypeQ();
+let mA=0,mB=0;
+function newMCQ(){mA=Math.floor(Math.random()*4)+4;mB=Math.floor(Math.random()*(mA-1))+1;const ans=mA-mB;let show='';for(let i=0;i<mA;i++)show+=i<ans?'🍪':'<span class="cross-out">🍪</span>';document.getElementById('mcCookies').innerHTML=show;document.getElementById('mcEq').textContent=mA+' − '+mB+' = ?';document.getElementById('mcFb').textContent='';const pool=new Set([ans]);while(pool.size<4){const w=ans+[-2,-1,1,2][Math.floor(Math.random()*4)];if(w>=0&&w<mA)pool.add(w);}const opts=document.getElementById('mcOpts');opts.innerHTML='';[...pool].sort(()=>Math.random()-.5).forEach(n=>{const b=document.createElement('button');b.className='opt';b.textContent=n;b.onclick=()=>{document.querySelectorAll('#mcOpts .opt').forEach(x=>x.onclick=null);const fb=document.getElementById('mcFb');if(n===ans){b.classList.add('correct');fb.textContent='🎉 '+mA+' − '+mB+' = '+ans+'! Correct! ⭐';fb.style.color='var(--sage)';}else{b.classList.add('wrong');fb.textContent='Count the bright cookies! The answer is '+ans+'.';fb.style.color='var(--icing)';document.querySelectorAll('#mcOpts .opt').forEach(x=>{if(parseInt(x.textContent)===ans)x.classList.add('correct');});}};opts.appendChild(b);});}
+newMCQ();
+</script>
+</body>
+</html>
