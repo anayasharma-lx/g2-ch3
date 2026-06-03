@@ -23,20 +23,6 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .cb{position:absolute;top:0;left:0;bottom:0;width:5px;border-radius:var(--r) 0 0 var(--r);background:var(--ac)}
 .ct{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;padding-left:14px;margin-bottom:3px;line-height:1.3}
 .cs{font-size:12px;color:var(--ink2);padding-left:14px;margin-bottom:14px;line-height:1.6}
-/* stepper */
-.cr{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.cg{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.03);border-radius:12px;padding:8px 12px;border:1.5px solid rgba(0,0,0,.06)}
-.cl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;min-width:48px}
-.sb{width:34px;height:34px;border-radius:50%;border:none;font-size:18px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.sb:active{transform:scale(.88)}
-.sv{font-family:'Grandstander',cursive;font-size:28px;font-weight:900;min-width:28px;text-align:center}
-/* blocks */
-.bx{background:rgba(0,0,0,.02);border-radius:14px;border:1.5px solid rgba(0,0,0,.06);padding:12px;min-height:60px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:14px}
-.flat{display:grid;grid-template-columns:repeat(10,8px);gap:1px}.flat-c{width:8px;height:8px;border-radius:1px;opacity:.8}
-.rod{display:flex;flex-direction:column;gap:1px}.rod-c{width:10px;height:10px;border-radius:1px;opacity:.8}
-.units{display:flex;flex-wrap:wrap;gap:2px;max-width:58px;align-self:flex-end}.unit-c{width:10px;height:10px;border-radius:2px;opacity:.8}
-.sep{width:1px;background:#D1D5DB;align-self:stretch;margin:0 3px}
-/* options */
 .opts{display:flex;gap:8px;flex-wrap:wrap}
 .opt{font-family:'Grandstander',cursive;font-size:22px;font-weight:800;min-width:72px;height:54px;border-radius:16px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .opt:hover{border-color:var(--ac);transform:translateY(-2px)}
@@ -50,19 +36,6 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .btn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 20px;border-radius:14px;border:none;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .btn:hover{transform:translateY(-1px)}
 .btn-p{background:var(--ac);color:#fff}
-.btn-g{background:#fff;color:var(--ink2);border:1.5px solid rgba(0,0,0,.1)}
-.btn-g:hover{border-color:var(--ac);color:var(--ac)}
-.chal{background:rgba(0,0,0,.02);border-radius:16px;padding:14px;border:1.5px dashed rgba(0,0,0,.1);margin-top:10px}
-.chal-q{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;margin-bottom:10px}
-.chal-q b{color:var(--ac);font-size:22px}
-canvas{display:block;border-radius:10px}
-/* drag & tap shared */
-.tappable{cursor:pointer;user-select:none;transition:transform .15s}
-.tappable:hover{transform:scale(1.08)}
-.tappable:active{transform:scale(.92)}
-/* misc */
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.pill{display:inline-block;font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:6px 18px;border-radius:30px}
 .big{font-family:'Grandstander',cursive;font-weight:900;line-height:1;text-align:center}
 </style>
 </head>
@@ -79,12 +52,12 @@ canvas{display:block;border-radius:10px}
 
 <div class="pnl on" id="p-learn">
   <div class="card"><div class="cb"></div>
-    <div class="ct">Eat the cookies!</div>
-    <div class="cs">The sign says how many to eat. Tap each cookie to munch it. Stop at exactly the right number!</div>
+    <div class="ct" id="learnTitle">Eat the cookies!</div>
+    <div class="cs" id="learnDesc">The sign says how many to eat. Tap each one to munch it. Stop at exactly the right number!</div>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(0,0,0,.02);border-radius:14px;padding:12px 16px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px">
       <span style="font-size:13px;font-weight:700;color:var(--ink2)">Eat exactly</span>
       <span class="big" style="font-size:40px;color:var(--ac)" id="tgtN">5</span>
-      <span style="font-size:13px;font-weight:700;color:var(--ink2)">cookies</span>
+      <span style="font-size:22px" id="tgtIcon">🍪</span>
       <div style="flex:1;min-width:80px"><div style="height:8px;background:rgba(0,0,0,.06);border-radius:8px;overflow:hidden"><div id="pgF" style="height:100%;background:var(--ac);border-radius:8px;width:0%;transition:.3s"></div></div><div style="font-size:10px;font-weight:700;color:var(--ink2);margin-top:3px" id="pgT">0 eaten</div></div>
     </div>
     <div id="plate" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:80px;margin-bottom:14px;padding:14px;background:rgba(0,0,0,.02);border-radius:18px;border:1.5px solid rgba(0,0,0,.06)"></div>
@@ -99,10 +72,11 @@ canvas{display:block;border-radius:10px}
     <div style="text-align:center;margin-top:8px"><button class="btn btn-p" onclick="nwPl()">New plate ↻</button></div>
   </div>
 </div>
+
 <div class="pnl" id="p-practice">
   <div class="card"><div class="cb"></div>
     <div class="ct">How many are left?</div>
-    <div class="cs">Faded cookies were eaten. Count the bright ones.</div>
+    <div class="cs">Faded ones were eaten. Count the bright ones.</div>
     <div id="mcC" style="font-size:32px;letter-spacing:3px;margin-bottom:6px;min-height:40px;display:flex;flex-wrap:wrap;gap:4px"></div>
     <div class="big" style="font-size:18px;color:var(--ink);margin-bottom:14px" id="mcEq"></div>
     <div class="opts" id="mcO"></div>
@@ -113,32 +87,118 @@ canvas{display:block;border-radius:10px}
 
 </div>
 <script>
-function sw(n){document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.textContent.toLowerCase()===n)});document.querySelectorAll('.pnl').forEach(function(p){var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none'})}
+function sw(n){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.textContent.toLowerCase()===n)});
+  document.querySelectorAll('.pnl').forEach(function(p){var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none'});
+}
 document.getElementById('p-practice').style.display='none';
-function pool4(ans,lo,hi){var s=new Set([ans]);var i=0;while(s.size<4&&i<50){i++;var w=ans+Math.round(Math.random()*8-4);if(w>=lo&&w<=hi&&w!==ans)s.add(w)}return[...s].sort(function(){return Math.random()-.5})}
-function mkOpts(cid,items,correct,fid){var c=document.getElementById(cid);c.innerHTML='';items.forEach(function(n){var b=document.createElement('button');b.className='opt';b.textContent=n;b.onclick=function(){c.querySelectorAll('.opt').forEach(function(x){x.onclick=null});var fb=document.getElementById(fid);if(String(n)===String(correct)){b.classList.add('ok');fb.textContent='🎉 Correct!';fb.style.color='var(--ok)'}else{b.classList.add('no');fb.textContent='The answer is '+correct+'.';fb.style.color='var(--no)';c.querySelectorAll('.opt').forEach(function(x){if(String(x.textContent)===String(correct))x.classList.add('ok')})}};c.appendChild(b)})}
 
+function pool4(ans,lo,hi){
+  var s=new Set([ans]);var i=0;
+  while(s.size<4&&i<50){i++;var w=ans+Math.round(Math.random()*8-4);if(w>=lo&&w<=hi&&w!==ans)s.add(w)}
+  return[...s].sort(function(){return Math.random()-.5});
+}
+function mkOpts(cid,items,correct,fid){
+  var c=document.getElementById(cid);c.innerHTML='';
+  items.forEach(function(n){
+    var b=document.createElement('button');b.className='opt';b.textContent=n;
+    b.onclick=function(){
+      c.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
+      var fb=document.getElementById(fid);
+      if(String(n)===String(correct)){b.classList.add('ok');fb.textContent='🎉 Correct!';fb.style.color='var(--ok)'}
+      else{b.classList.add('no');fb.textContent='The answer is '+correct+'.';fb.style.color='var(--no)';
+        c.querySelectorAll('.opt').forEach(function(x){if(String(x.textContent)===String(correct))x.classList.add('ok')})}
+    };
+    c.appendChild(b);
+  });
+}
+
+/* Food items — each has emoji + singular + plural name */
+var FOODS=[
+  {e:'🍪',s:'cookie',p:'cookies'},
+  {e:'🧁',s:'cupcake',p:'cupcakes'},
+  {e:'🍩',s:'doughnut',p:'doughnuts'},
+  {e:'🍓',s:'strawberry',p:'strawberries'},
+  {e:'🍇',s:'grape',p:'grapes'},
+  {e:'🍬',s:'sweet',p:'sweets'},
+];
+
+var curFood=FOODS[0];
 var ptT=0,eaten=0,eTgt=0,pAct=true;
-function nwPl(){ptT=Math.floor(Math.random()*5)+6;eTgt=Math.floor(Math.random()*(ptT-2))+1;eaten=0;pAct=true;
-document.getElementById('tgtN').textContent=eTgt;document.getElementById('pgF').style.width='0%';document.getElementById('pgT').textContent='0 eaten';
-document.getElementById('stS').textContent=ptT;document.getElementById('stE').textContent=0;document.getElementById('stL').textContent=ptT;document.getElementById('brv').textContent='';
-var pl=document.getElementById('plate');pl.innerHTML='';var cks=['🍪','🧁','🍩'];var ck=cks[Math.floor(Math.random()*cks.length)];
-for(var i=0;i<ptT;i++){var c=document.createElement('span');c.style.cssText='font-size:38px;cursor:pointer;user-select:none;transition:all .25s;line-height:1;display:inline-block';c.textContent=ck;c.onclick=eatC;pl.appendChild(c)}}
-function eatC(e){if(!pAct)return;var c=e.target;if(c.dataset.x)return;c.dataset.x='1';c.style.opacity='0';c.style.transform='scale(0) rotate(20deg)';c.style.pointerEvents='none';
-eaten++;var left=ptT-eaten;document.getElementById('stE').textContent=eaten;document.getElementById('stL').textContent=left;
-document.getElementById('pgF').style.width=Math.min(eaten/eTgt*100,100)+'%';document.getElementById('pgT').textContent=eaten+' eaten';
-var br=document.getElementById('brv');
-if(eaten===eTgt){br.textContent='🎉 Perfect! '+left+' left!';br.style.color='var(--ok)';pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null})}
-else if(eaten>eTgt){br.textContent='Too many! Try a new plate.';br.style.color='var(--no)';pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null})}}
-nwPl();
-var mA=0,mB=0;
-function nwMC(){mA=Math.floor(Math.random()*4)+4;mB=Math.floor(Math.random()*(mA-1))+1;var ans=mA-mB;
-document.getElementById('mcF').textContent='';var d=document.getElementById('mcC');d.innerHTML='';
-for(var i=0;i<mA;i++){var s=document.createElement('span');s.textContent='🍪';if(i>=ans){s.style.opacity='.18';s.style.filter='grayscale(1)'}d.appendChild(s)}
-document.getElementById('mcEq').textContent=mA+' − '+mB+' = ?';
-mkOpts('mcO',pool4(ans,0,mA),ans,'mcF')}
-nwMC();
 
+function nwPl(){
+  /* pick a random food for this whole plate */
+  curFood=FOODS[Math.floor(Math.random()*FOODS.length)];
+
+  ptT=Math.floor(Math.random()*5)+6;
+  eTgt=Math.floor(Math.random()*(ptT-2))+1;
+  eaten=0;pAct=true;
+
+  /* update the title + description to match the food */
+  document.getElementById('learnTitle').textContent='Eat the '+curFood.p+'!';
+  document.getElementById('learnDesc').textContent='The sign says how many to eat. Tap each one to munch it. Stop at exactly the right number!';
+  document.getElementById('tgtIcon').textContent=curFood.e;
+
+  document.getElementById('tgtN').textContent=eTgt;
+  document.getElementById('pgF').style.width='0%';
+  document.getElementById('pgT').textContent='0 eaten';
+  document.getElementById('stS').textContent=ptT;
+  document.getElementById('stE').textContent=0;
+  document.getElementById('stL').textContent=ptT;
+  document.getElementById('brv').textContent='';
+
+  var pl=document.getElementById('plate');pl.innerHTML='';
+  for(var i=0;i<ptT;i++){
+    var c=document.createElement('span');
+    c.style.cssText='font-size:38px;cursor:pointer;user-select:none;transition:all .25s;line-height:1;display:inline-block';
+    c.textContent=curFood.e;
+    c.onclick=eatC;
+    pl.appendChild(c);
+  }
+}
+
+function eatC(e){
+  if(!pAct)return;
+  var c=e.target;if(c.dataset.x)return;
+  c.dataset.x='1';
+  c.style.opacity='0';c.style.transform='scale(0) rotate(20deg)';c.style.pointerEvents='none';
+  eaten++;
+  var left=ptT-eaten;
+  document.getElementById('stE').textContent=eaten;
+  document.getElementById('stL').textContent=left;
+  document.getElementById('pgF').style.width=Math.min(eaten/eTgt*100,100)+'%';
+  document.getElementById('pgT').textContent=eaten+' eaten';
+  var br=document.getElementById('brv');
+  var nm=eaten===1?curFood.s:curFood.p;
+  if(eaten===eTgt){
+    br.textContent='🎉 Perfect! '+left+' '+curFood.p+' left!';br.style.color='var(--ok)';
+    pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null});
+  } else if(eaten>eTgt){
+    br.textContent='Too many '+curFood.p+'! Try a new plate.';br.style.color='var(--no)';
+    pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null});
+  }
+}
+nwPl();
+
+/* Practice — also uses the matching food across question + display */
+var mA=0,mB=0,mFood=FOODS[0];
+function nwMC(){
+  mFood=FOODS[Math.floor(Math.random()*FOODS.length)];
+  mA=Math.floor(Math.random()*4)+4;
+  mB=Math.floor(Math.random()*(mA-1))+1;
+  var ans=mA-mB;
+  document.getElementById('mcF').textContent='';
+  var d=document.getElementById('mcC');d.innerHTML='';
+  for(var i=0;i<mA;i++){
+    var s=document.createElement('span');
+    s.textContent=mFood.e;
+    if(i>=ans){s.style.opacity='.18';s.style.filter='grayscale(1)'}
+    d.appendChild(s);
+  }
+  document.getElementById('mcEq').textContent=mA+' '+mFood.p+' − '+mB+' eaten = ?';
+  mkOpts('mcO',pool4(ans,0,mA),ans,'mcF');
+}
+nwMC();
 </script>
 </body>
 </html>
