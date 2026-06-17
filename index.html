@@ -24,7 +24,7 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .ct{font-family:'Grandstander',cursive;font-size:15px;font-weight:800;padding-left:14px;margin-bottom:3px;line-height:1.3}
 .cs{font-size:12px;color:var(--ink2);padding-left:14px;margin-bottom:14px;line-height:1.6}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
-.opt{font-family:'Grandstander',cursive;font-size:22px;font-weight:800;min-width:72px;height:54px;border-radius:16px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.opt{font-family:'Grandstander',cursive;font-size:20px;font-weight:800;min-width:72px;height:54px;border-radius:16px;border:2.5px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05);padding:0 12px}
 .opt:hover{border-color:var(--ac);transform:translateY(-2px)}
 .opt.ok{background:#DCFCE7;border-color:var(--ok);color:#15803D;animation:pop .3s}
 .opt.no{background:#FEE2E2;border-color:var(--no);color:var(--no);animation:shk .35s}
@@ -36,7 +36,15 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 .btn{font-family:'Grandstander',cursive;font-size:14px;font-weight:800;padding:10px 20px;border-radius:14px;border:none;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .btn:hover{transform:translateY(-1px)}
 .btn-p{background:var(--ac);color:#fff}
+.btn-g{background:#fff;color:var(--ink2);border:1.5px solid rgba(0,0,0,.1)}
+.btn-g:hover{border-color:var(--ac);color:var(--ac)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .big{font-family:'Grandstander',cursive;font-weight:900;line-height:1;text-align:center}
+.qbox{background:rgba(0,0,0,.02);border-radius:14px;padding:14px 16px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px;font-size:15px;font-weight:600;line-height:1.7;color:var(--ink)}
+.qtag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;background:var(--ac);color:#fff;border-radius:20px;padding:2px 10px;margin-bottom:8px}
+.mode-row{display:flex;gap:6px;margin-bottom:14px}
+.mode-btn{flex:1;padding:8px 0;font-family:'Grandstander',cursive;font-size:12px;font-weight:800;border:2px solid rgba(0,0,0,.1);border-radius:10px;background:#fff;cursor:pointer;color:var(--ink2);transition:.15s}
+.mode-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 </style>
 </head>
 <body>
@@ -52,153 +60,213 @@ html,body{width:100%;min-height:100vh;font-family:'Poppins',sans-serif;backgroun
 
 <div class="pnl on" id="p-learn">
   <div class="card"><div class="cb"></div>
-    <div class="ct" id="learnTitle">Eat the cookies!</div>
-    <div class="cs" id="learnDesc">The sign says how many to eat. Tap each one to munch it. Stop at exactly the right number!</div>
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(0,0,0,.02);border-radius:14px;padding:12px 16px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px">
-      <span style="font-size:13px;font-weight:700;color:var(--ink2)">Eat exactly</span>
-      <span class="big" style="font-size:40px;color:var(--ac)" id="tgtN">5</span>
-      <span style="font-size:22px" id="tgtIcon">🍪</span>
-      <div style="flex:1;min-width:80px"><div style="height:8px;background:rgba(0,0,0,.06);border-radius:8px;overflow:hidden"><div id="pgF" style="height:100%;background:var(--ac);border-radius:8px;width:0%;transition:.3s"></div></div><div style="font-size:10px;font-weight:700;color:var(--ink2);margin-top:3px" id="pgT">0 eaten</div></div>
+    <div class="ct">Column method subtraction</div>
+    <div class="cs">Type the digit for each highlighted column. Work right to left — Ones first, then Tens, then Hundreds. Borrow when needed.</div>
+
+    <div class="mode-row">
+      <button class="mode-btn on" id="m2d" onclick="setMode3(2)">2-digit − 2-digit</button>
+      <button class="mode-btn" id="m3d" onclick="setMode3(3)">3-digit − 2-digit</button>
     </div>
-    <div id="plate" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:80px;margin-bottom:14px;padding:14px;background:rgba(0,0,0,.02);border-radius:18px;border:1.5px solid rgba(0,0,0,.06)"></div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
-      <div style="text-align:center;background:rgba(0,0,0,.02);border-radius:12px;padding:8px 14px;min-width:70px;border:1.5px solid rgba(0,0,0,.06)"><div class="big" style="font-size:34px" id="stS">10</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--ink2)">Started</div></div>
-      <div class="big" style="font-size:28px;color:var(--ac);align-self:center">−</div>
-      <div style="text-align:center;background:rgba(0,0,0,.02);border-radius:12px;padding:8px 14px;min-width:70px;border:1.5px solid rgba(0,0,0,.06)"><div class="big" style="font-size:34px" id="stE">0</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--ink2)">Eaten</div></div>
-      <div class="big" style="font-size:28px;color:rgba(0,0,0,.15);align-self:center">=</div>
-      <div style="text-align:center;background:#DCFCE7;border-radius:12px;padding:8px 14px;min-width:70px;border:1.5px solid #86EFAC"><div class="big" style="font-size:34px;color:var(--ok)" id="stL">10</div><div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--ok)">Left</div></div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:16px">
+      <div id="subT" style="display:inline-grid;gap:0;align-items:center"></div>
     </div>
-    <div class="fb" id="brv"></div>
-    <div style="text-align:center;margin-top:8px"><button class="btn btn-p" onclick="nwPl()">New plate ↻</button></div>
+    <div style="background:rgba(0,0,0,.02);border-radius:14px;padding:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:12px;font-size:13px;font-weight:600;color:var(--ink);line-height:1.8;min-height:50px" id="inst3">Press "New problem" to start.</div>
+    <div class="fb" id="cf3"></div>
+    <div id="doneBox3" style="display:none;background:#DCFCE7;border-radius:14px;padding:14px;text-align:center;font-family:Grandstander,cursive;font-size:22px;font-weight:900;color:var(--ok);margin-bottom:10px"></div>
+    <div class="row">
+      <button class="btn btn-p" id="goB3" onclick="ck3()" style="display:none">Check ✓</button>
+      <button class="btn btn-g" onclick="np3()">New problem ↻</button>
+    </div>
   </div>
 </div>
 
 <div class="pnl" id="p-practice">
   <div class="card"><div class="cb"></div>
-    <div class="ct">How many are left?</div>
-    <div class="cs">Faded ones were eaten. Count the bright ones.</div>
-    <div id="mcC" style="font-size:32px;letter-spacing:3px;margin-bottom:6px;min-height:40px;display:flex;flex-wrap:wrap;gap:4px"></div>
-    <div class="big" style="font-size:18px;color:var(--ink);margin-bottom:14px" id="mcEq"></div>
-    <div class="opts" id="mcO"></div>
-    <div class="fb" id="mcF"></div>
-    <button class="nbtn" onclick="nwMC()">Next →</button>
+    <div class="ct">Solve it</div>
+    <div class="cs">Some questions are calculations, some are word problems. Pick the right answer.</div>
+    <div class="qbox" id="p3Q"></div>
+    <div class="opts" id="p3O"></div>
+    <div class="fb" id="p3F"></div>
+    <button class="nbtn" onclick="np3p()">Next →</button>
   </div>
 </div>
 
 </div>
 <script>
-function sw(n){
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.textContent.toLowerCase()===n)});
-  document.querySelectorAll('.pnl').forEach(function(p){var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none'});
-}
+function sw(n){document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.textContent.toLowerCase()===n)});document.querySelectorAll('.pnl').forEach(function(p){var a=p.id==='p-'+n;p.classList.toggle('on',a);p.style.display=a?'flex':'none'})}
 document.getElementById('p-practice').style.display='none';
 
-function pool4(ans,lo,hi){
-  var s=new Set([ans]);var i=0;
-  while(s.size<4&&i<50){i++;var w=ans+Math.round(Math.random()*8-4);if(w>=lo&&w<=hi&&w!==ans)s.add(w)}
-  return[...s].sort(function(){return Math.random()-.5});
-}
-function mkOpts(cid,items,correct,fid){
-  var c=document.getElementById(cid);c.innerHTML='';
+function rn(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function pool4(ans,lo,hi){var s=new Set([ans]);var i=0;while(s.size<4&&i<60){i++;var w=ans+rn(-15,15);if(w>=lo&&w<=hi&&w!==ans)s.add(w)}return[...s].sort(function(){return Math.random()-.5})}
+
+function mkOpts(items,correct){
+  var c=document.getElementById('p3O');c.innerHTML='';
+  var fb=document.getElementById('p3F');fb.textContent='';
   items.forEach(function(n){
     var b=document.createElement('button');b.className='opt';b.textContent=n;
     b.onclick=function(){
       c.querySelectorAll('.opt').forEach(function(x){x.onclick=null});
-      var fb=document.getElementById(fid);
-      if(String(n)===String(correct)){b.classList.add('ok');fb.textContent='🎉 Correct!';fb.style.color='var(--ok)'}
-      else{b.classList.add('no');fb.textContent='The answer is '+correct+'.';fb.style.color='var(--no)';
-        c.querySelectorAll('.opt').forEach(function(x){if(String(x.textContent)===String(correct))x.classList.add('ok')})}
+      if(n===correct){b.classList.add('ok');fb.innerHTML='<div style="background:#DCFCE7;border:2px solid #86EFAC;border-radius:12px;padding:12px;animation:pop .3s">🎉 Correct!</div>';fb.style.color='var(--ok)'}
+      else{b.classList.add('no');fb.textContent='The answer is '+correct+'.';fb.style.color='var(--no)';c.querySelectorAll('.opt').forEach(function(x){if(x.textContent===String(correct))x.classList.add('ok')})}
     };
     c.appendChild(b);
   });
 }
 
-/* Food items — each has emoji + singular + plural name */
-var FOODS=[
-  {e:'🍪',s:'cookie',p:'cookies'},
-  {e:'🧁',s:'cupcake',p:'cupcakes'},
-  {e:'🍩',s:'doughnut',p:'doughnuts'},
-  {e:'🍓',s:'strawberry',p:'strawberries'},
-  {e:'🍇',s:'grape',p:'grapes'},
-  {e:'🍬',s:'sweet',p:'sweets'},
+/* ── Learn: column subtraction with borrowing ── */
+var curMode3=2;
+var S1,S2,subCols,nCols3,step3;
+
+function setMode3(m){
+  curMode3=m;
+  document.getElementById('m2d').classList.toggle('on',m===2);
+  document.getElementById('m3d').classList.toggle('on',m===3);
+  np3();
+}
+
+function gen3(){
+  if(curMode3===2){
+    /* 2-digit - 2-digit, ensure S1 > S2 */
+    S2=rn(11,79);S1=rn(S2+1,99);
+  } else {
+    /* 3-digit - 2-digit */
+    S2=rn(11,99);S1=rn(S2+50,499);
+    if(S1>499)S1=499;
+  }
+}
+
+function init3(){
+  /* always work in H,T,O columns */
+  nCols3=3;
+  /* digits of S1 and S2 (S2 padded with 0 hundreds) */
+  var d1=[Math.floor(S1/100),Math.floor((S1%100)/10),S1%10];
+  var d2=[0,              Math.floor((S2%100)/10),S2%10];
+
+  /* compute column-by-column subtraction with borrowing, right to left */
+  /* store effective top digit after borrowing and whether borrow occurred */
+  subCols=[];
+  var borrow=0;
+  for(var i=2;i>=0;i--){
+    var top=d1[i]-borrow;
+    var bot=d2[i];
+    var brw=top<bot;
+    var eff=brw?top+10:top;
+    subCols[i]={d1:d1[i],d2:d2[i],borrow:borrow,brw:brw,eff:eff,dg:eff-bot};
+    borrow=brw?1:0;
+  }
+  step3=nCols3-1;
+}
+
+function draw3(){
+  var lbls=['H','T','O'];
+  var cur=step3;
+  var solved=new Set();for(var i=nCols3-1;i>step3;i--)solved.add(i);
+  var tbl=document.getElementById('subT');
+  tbl.style.gridTemplateColumns='44px 56px 56px 56px';tbl.innerHTML='';
+
+  /* header */
+  tbl.innerHTML+='<div></div>';
+  for(var i=0;i<3;i++)tbl.innerHTML+='<div style="height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:'+(i===cur?'var(--ac)':'var(--ink2)')+'">'+lbls[i]+'</div>';
+
+  /* borrow annotation row */
+  tbl.innerHTML+='<div></div>';
+  for(var i=0;i<3;i++){
+    var col=subCols[i];
+    /* show strikethrough original + new effective digit when this col has been borrowed from and the previous (right) col needed a borrow */
+    var showBrw=col.brw&&solved.has(i+1); /* right column already solved and it caused a borrow */
+    tbl.innerHTML+='<div style="height:28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">';
+    if(showBrw)tbl.innerHTML+='<span style="font-size:11px;color:#9CA3AF;text-decoration:line-through;line-height:1">'+col.d1+'</span><span style="font-family:Grandstander,cursive;font-size:15px;font-weight:900;color:var(--no);line-height:1">'+(col.d1-1)+'</span>';
+    tbl.innerHTML+='</div>';
+  }
+
+  /* top number row (S1) */
+  tbl.innerHTML+='<div></div>';
+  for(var i=0;i<3;i++){
+    var col=subCols[i];
+    var showBrwEff=col.brw&&solved.has(i+1);
+    /* if borrow is shown, grey out original */
+    var valStr=showBrwEff?'<s style="color:#9CA3AF;font-size:30px">'+col.d1+'</s>':String(col.d1);
+    var dimZero=col.d1===0&&i<1;
+    tbl.innerHTML+='<div style="width:56px;height:52px;display:flex;align-items:center;justify-content:center;font-family:Grandstander,cursive;font-size:36px;font-weight:900;color:'+(dimZero?'#D1D5DB':'var(--ink)')+';border-radius:9px;'+(i===cur?'background:rgba(0,0,0,.04)':'')+'">'+valStr+'</div>';
+  }
+
+  /* − sign + bottom number row (S2) */
+  tbl.innerHTML+='<div style="width:44px;height:52px;display:flex;align-items:center;justify-content:center;font-family:Grandstander,cursive;font-size:28px;font-weight:900;color:var(--ac)">−</div>';
+  for(var i=0;i<3;i++){
+    var col=subCols[i];var d=col.d2;
+    tbl.innerHTML+='<div style="width:56px;height:52px;display:flex;align-items:center;justify-content:center;font-family:Grandstander,cursive;font-size:36px;font-weight:900;color:'+(d===0&&i<1?'#D1D5DB':'var(--ink)')+';border-radius:9px;'+(i===cur?'background:rgba(0,0,0,.04)':'')+'">'+d+'</div>';
+  }
+
+  /* line */
+  tbl.innerHTML+='<div></div><div style="grid-column:2/5;height:3px;background:var(--ink);border-radius:2px;margin:2px 0"></div><div style="display:none"></div><div style="display:none"></div>';
+
+  /* answer row */
+  tbl.innerHTML+='<div></div>';
+  for(var i=0;i<3;i++){
+    if(solved.has(i))
+      tbl.innerHTML+='<div style="width:56px;height:58px;display:flex;align-items:center;justify-content:center;font-family:Grandstander,cursive;font-size:36px;font-weight:900;color:var(--ok);border-radius:12px;background:#DCFCE7;border:2px solid #86EFAC">'+subCols[i].dg+'</div>';
+    else if(i===cur)
+      tbl.innerHTML+='<div style="width:56px;height:58px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:2px solid var(--ac);background:rgba(0,0,0,.02)" id="curC3"><input id="curI3" type="number" min="0" max="9" placeholder="?" autocomplete="off" style="font-family:Grandstander,cursive;font-size:36px;font-weight:900;width:48px;height:48px;border:none;background:transparent;text-align:center;color:var(--ink);outline:none;-moz-appearance:textfield"></div>';
+    else
+      tbl.innerHTML+='<div style="width:56px;height:58px;display:flex;align-items:center;justify-content:center;font-family:Grandstander,cursive;font-size:32px;color:#D1D5DB">_</div>';
+  }
+
+  var inp=document.getElementById('curI3');
+  if(inp){inp.oninput=function(){if(inp.value.length>1)inp.value=inp.value.slice(-1)};inp.onkeydown=function(e){if(e.key==='Enter')ck3()};inp.focus()}
+}
+
+function bi3(){
+  var lbls=['hundreds','tens','ones'];
+  var cur=step3;var col=subCols[cur];
+  var h='<b>'+lbls[cur].charAt(0).toUpperCase()+lbls[cur].slice(1)+' column:</b> ';
+  if(col.brw){
+    h+=col.d1+' is less than '+col.d2+', so borrow 1 ten from the '+lbls[cur-1]+'. ';
+    h+='What is '+col.eff+' − '+col.d2+'?';
+  } else {
+    h+='What is '+col.eff+' − '+col.d2+'?';
+  }
+  document.getElementById('inst3').innerHTML=h;
+}
+
+function ck3(){
+  var inp=document.getElementById('curI3');if(!inp)return;
+  var v=parseInt(inp.value);var fb=document.getElementById('cf3');
+  if(isNaN(v)||v<0||v>9){fb.textContent='Type a digit 0–9.';fb.style.color='var(--no)';inp.value='';inp.focus();return}
+  var cor=subCols[step3].dg;
+  if(v===cor){
+    fb.textContent='✓';fb.style.color='var(--ok)';step3--;
+    setTimeout(function(){fb.textContent='';
+      if(step3<0){draw3();document.getElementById('doneBox3').style.display='block';document.getElementById('doneBox3').textContent='🎉 '+S1+' − '+S2+' = '+(S1-S2);document.getElementById('inst3').style.opacity='.3';document.getElementById('goB3').style.display='none'}
+      else{draw3();bi3()}},450);
+  } else {fb.textContent='Not quite — try again!';fb.style.color='var(--no)';inp.value='';inp.focus()}
+}
+
+function np3(){gen3();init3();document.getElementById('doneBox3').style.display='none';document.getElementById('inst3').style.opacity='1';document.getElementById('goB3').style.display='inline-block';document.getElementById('cf3').textContent='';draw3();bi3()}
+np3();
+
+/* ── Practice: word problems + calculations ── */
+var SUB_WORDS=[
+  function(a,b){return{tag:'Word problem',q:'Priya had <b>'+a+'</b> marbles. She gave <b>'+b+'</b> to her brother. How many marbles does she have left?',ans:a-b}},
+  function(a,b){return{tag:'Word problem',q:'A bus had <b>'+a+'</b> passengers. At the stop, <b>'+b+'</b> got off. How many passengers are still on the bus?',ans:a-b}},
+  function(a,b){return{tag:'Word problem',q:'A shopkeeper had <b>'+a+'</b> apples. He sold <b>'+b+'</b> apples. How many are left?',ans:a-b}},
+  function(a,b){return{tag:'Word problem',q:'Rohan scored <b>'+a+'</b> points. He lost <b>'+b+'</b> points. What is his score now?',ans:a-b}},
+  function(a,b){return{tag:'Word problem',q:'A library had <b>'+a+'</b> books. Students borrowed <b>'+b+'</b>. How many books remain on the shelves?',ans:a-b}},
+  function(a,b){return{tag:'Word problem',q:'A farmer picked <b>'+a+'</b> mangoes. <b>'+b+'</b> were thrown away. How many good mangoes are left?',ans:a-b}},
+  function(a,b){return{tag:'Calculation',q:'<span style="font-family:Grandstander,cursive;font-size:26px;font-weight:900">'+a+' − '+b+' = ?</span>',ans:a-b}},
 ];
 
-var curFood=FOODS[0];
-var ptT=0,eaten=0,eTgt=0,pAct=true;
-
-function nwPl(){
-  /* pick a random food for this whole plate */
-  curFood=FOODS[Math.floor(Math.random()*FOODS.length)];
-
-  ptT=Math.floor(Math.random()*5)+6;
-  eTgt=Math.floor(Math.random()*(ptT-2))+1;
-  eaten=0;pAct=true;
-
-  /* update the title + description to match the food */
-  document.getElementById('learnTitle').textContent='Eat the '+curFood.p+'!';
-  document.getElementById('learnDesc').textContent='The sign says how many to eat. Tap each one to munch it. Stop at exactly the right number!';
-  document.getElementById('tgtIcon').textContent=curFood.e;
-
-  document.getElementById('tgtN').textContent=eTgt;
-  document.getElementById('pgF').style.width='0%';
-  document.getElementById('pgT').textContent='0 eaten';
-  document.getElementById('stS').textContent=ptT;
-  document.getElementById('stE').textContent=0;
-  document.getElementById('stL').textContent=ptT;
-  document.getElementById('brv').textContent='';
-
-  var pl=document.getElementById('plate');pl.innerHTML='';
-  for(var i=0;i<ptT;i++){
-    var c=document.createElement('span');
-    c.style.cssText='font-size:38px;cursor:pointer;user-select:none;transition:all .25s;line-height:1;display:inline-block';
-    c.textContent=curFood.e;
-    c.onclick=eatC;
-    pl.appendChild(c);
-  }
+function np3p(){
+  var is3=Math.random()<0.5;
+  var b=rn(11,79);
+  var a=is3?rn(b+50,499):rn(b+1,99);
+  if(is3&&a>499)a=499;
+  var gen=SUB_WORDS[Math.floor(Math.random()*SUB_WORDS.length)];
+  var q=gen(a,b);
+  document.getElementById('p3Q').innerHTML='<div class="qtag">'+q.tag+'</div><div>'+q.q+'</div>';
+  mkOpts(pool4(q.ans,1,488),q.ans);
 }
-
-function eatC(e){
-  if(!pAct)return;
-  var c=e.target;if(c.dataset.x)return;
-  c.dataset.x='1';
-  c.style.opacity='0';c.style.transform='scale(0) rotate(20deg)';c.style.pointerEvents='none';
-  eaten++;
-  var left=ptT-eaten;
-  document.getElementById('stE').textContent=eaten;
-  document.getElementById('stL').textContent=left;
-  document.getElementById('pgF').style.width=Math.min(eaten/eTgt*100,100)+'%';
-  document.getElementById('pgT').textContent=eaten+' eaten';
-  var br=document.getElementById('brv');
-  var nm=eaten===1?curFood.s:curFood.p;
-  if(eaten===eTgt){
-    br.textContent='🎉 Perfect! '+left+' '+curFood.p+' left!';br.style.color='var(--ok)';
-    pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null});
-  } else if(eaten>eTgt){
-    br.textContent='Too many '+curFood.p+'! Try a new plate.';br.style.color='var(--no)';
-    pAct=false;document.querySelectorAll('#plate span').forEach(function(x){x.onclick=null});
-  }
-}
-nwPl();
-
-/* Practice — also uses the matching food across question + display */
-var mA=0,mB=0,mFood=FOODS[0];
-function nwMC(){
-  mFood=FOODS[Math.floor(Math.random()*FOODS.length)];
-  mA=Math.floor(Math.random()*4)+4;
-  mB=Math.floor(Math.random()*(mA-1))+1;
-  var ans=mA-mB;
-  document.getElementById('mcF').textContent='';
-  var d=document.getElementById('mcC');d.innerHTML='';
-  for(var i=0;i<mA;i++){
-    var s=document.createElement('span');
-    s.textContent=mFood.e;
-    if(i>=ans){s.style.opacity='.18';s.style.filter='grayscale(1)'}
-    d.appendChild(s);
-  }
-  document.getElementById('mcEq').textContent=mA+' '+mFood.p+' − '+mB+' eaten = ?';
-  mkOpts('mcO',pool4(ans,0,mA),ans,'mcF');
-}
-nwMC();
+np3p();
 </script>
 </body>
 </html>
